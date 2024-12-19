@@ -4,9 +4,13 @@ const crypto = require("crypto");
 const cors = require("cors");
 
 const app = express();
-const PORT = 3000;
+const port = process.env.PORT || 3000;
 const HOST = "10.160.0.96";
 const otpStorage = new Map();
+
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Server is running on port ${port}`);
+});
 
 // Add CORS middleware
 app.use(
@@ -198,9 +202,4 @@ app.use((err, req, res, next) => {
     message: "Something went wrong!",
     error: process.env.NODE_ENV === "development" ? err.message : undefined,
   });
-});
-
-// Start the server
-app.listen(PORT, HOST, () => {
-  console.log(`Server is running on http://${HOST}:${PORT}`);
 });
